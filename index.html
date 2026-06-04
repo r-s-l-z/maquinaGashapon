@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="Rosa López " content=" github @r-s-l-z - https://rosa-lopez.vercel.app/">
+    <meta name="description" content="Proyecto de máquina gashapon. Permite a los usuarios seleccionar cápsulas, insertar dinero y recibir premios sorpresa. Administra el inventario y las transacciones de manera eficiente.">
+    <link rel="stylesheet" href="styles.css">
+    <title>Gashapon Machine - JSON Admin</title>
+</head>
+<body>
+
+    <audio id="sonidoMoneda" src="/sonidoMoneda.mp3"></audio>
+    <audio id="sonidoBola" src="/sonidoBola.mp3"></audio> 
+    <audio id="sonidoDevolucion" src="/sonidoDevolucion.mp3"></audio>
+    <audio id="sonidoManivela" src="/sonidoManivela.mp3"></audio>
+
+    <div class="vending-machine">
+        <div class="title">✨ GASHAPON ✨</div>
+        
+        <div class="grid-container">
+            <div>
+                <div class="section-title">
+                    <p>¡Consigue desde pegatinas, llaveros hasta un tamagotchi!</p>
+                    <p>Selecciona tu Bola</p>
+                </div>
+                <div class="btn-list">
+                    
+                    <button id="btn-Bola Transparente" class="btn-ball" onclick="seleccionarBola('Bola Transparente')">
+                        <img class="img-ball-choice" src="/img/bolaTransparente.png" alt="Bola Transparente">
+                        <div class="ball-overlay">
+                            <span class="bola-info">Transparente<span id="stock-Bola Transparente" class="stock-label"></span></span> 
+                            <span id="precio-Bola Transparente" class="ball-price">1.00€</span>
+                        </div>
+                    </button>
+
+                    <button id="btn-Bola Roja" class="btn-ball" onclick="seleccionarBola('Bola Roja')">
+                        <img class="img-ball-choice" src="/img/bolaRoja.png" alt="Bola Roja">
+                        <div class="ball-overlay">
+                            <span class="bola-info">Roja<span id="stock-Bola Roja" class="stock-label"></span></span> 
+                            <span id="precio-Bola Roja" class="ball-price">1.50€</span>
+                        </div>
+                    </button>
+
+                    <button id="btn-Bola Azul" class="btn-ball" onclick="seleccionarBola('Bola Azul')">
+                        <img class="img-ball-choice" src="/img/bolaAzul.png" alt="Bola Azul">
+                        <div class="ball-overlay">
+                            <span class="bola-info">Azul<span id="stock-Bola Azul" class="stock-label"></span></span> 
+                            <span id="precio-Bola Azul" class="ball-price">1.50€</span>
+                        </div>
+                    </button>
+
+                    <button id="btn-Bola Verde" class="btn-ball" onclick="seleccionarBola('Bola Verde')">
+                        <img class="img-ball-choice" src="/img/bolaVerde.png" alt="Bola Verde">
+                        <div class="ball-overlay">
+                            <span class="bola-info">Verde<span id="stock-Bola Verde" class="stock-label"></span></span> 
+                            <span id="precio-Bola Verde" class="ball-price">1.50€</span>
+                        </div>
+                    </button>
+
+                    <button id="btn-Bola Rosa" class="btn-ball" onclick="seleccionarBola('Bola Rosa')">
+                        <img class="img-ball-choice" src="/img/bolaRosa.png" alt="Bola Rosa">
+                        <div class="ball-overlay">
+                            <span class="bola-info">Fucsia<span id="stock-Bola Rosa" class="stock-label"></span></span> 
+                            <span id="precio-Bola Rosa" class="ball-price">2.00€</span>
+                        </div>
+                    </button>
+
+                    <button id="btn-Bola Amarilla" class="btn-ball" onclick="seleccionarBola('Bola Amarilla')">
+                        <img class="img-ball-choice" src="/img/bolaAmarilla.png" alt="Bola Amarilla">
+                        <div class="ball-overlay">
+                            <span class="bola-info">Amarilla<span id="stock-Bola Amarilla" class="stock-label"></span></span> 
+                            <span id="precio-Bola Amarilla" class="ball-price">3.00€</span>
+                        </div>
+                    </button>
+
+                </div>
+
+                <div class="contenedor__bolas-acciones">
+                    <button class="contenedor__bolas-acciones-btn" title="Restablecer Vending Machine" onclick="restablecerInventarioOriginal()">📦 Reponer Stock</button>
+                    <button class="contenedor__bolas-acciones-btn" title="Exportar Datos" onclick="exportarInventario()">💾 Exportar</button>
+                    <button class="contenedor__bolas-acciones-btn" title="Importar Datos" onclick="dispararSelectorArchivo()">📂 Importar</button>
+                    
+                    <input type="file" id="input-importar-json" accept=".json" onchange="importarInventario(event)" style="display: none;">
+                </div>
+            </div>
+
+            <div>
+                <div class="display-panel">
+                    <div id="precio-display" class="display">PRECIO: 0.00 €</div>
+                    <div id="saldo-display" class="display">SALDO: 0.00 €</div>
+                    <div id="seleccion-display" class="display">NO HAY PRODUCTO SELECCIONADO</div>
+                </div>
+
+                <button id="btn-girar" class="btn-crank" onclick="comprobarCompra()" disabled>🔄 Girar Manivela</button>
+                
+                <button class="btn-reset" onclick="devolverEfectivo()"> Cancelar ❌ Devolver</button>
+
+                <div class="section-title">Insertar Monedas / Billetes</div>
+                <div class="money-grid">
+                    <button class="btn-money" onclick="insertarMoneda(0.05)" title="0.05 €"><img class="img-coin" src="/img/5cent.png" alt="5c"></button>
+                    <button class="btn-money" onclick="insertarMoneda(0.10)" title="0.10 €"><img class="img-coin" src="/img/10cent.png" alt="10c"></button>
+                    <button class="btn-money" onclick="insertarMoneda(0.20)" title="0.20 €"><img class="img-coin" src="/img/20cent.png" alt="20c"></button>
+                    <button class="btn-money" onclick="insertarMoneda(0.50)" title="0.50 €"><img class="img-coin" src="/img/50cent.png" alt="50c"></button>
+                    <button class="btn-money" onclick="insertarMoneda(1.00)" title="1.00 €"><img class="img-coin" src="/img/1€.png" alt="1€"></button>
+                    <button class="btn-money" onclick="insertarMoneda(2.00)" title="2.00 €"><img class="img-coin" src="/img/2€.png" alt="2€"></button>
+                    <button class="btn-money" onclick="insertarMoneda(5.00)" title="5.00 €"><img class="img-bill" src="/img/5€.png" alt="5€"></button>
+                    <button class="btn-money" onclick="insertarMoneda(10.00)" title="10.00 €"><img class="img-bill" src="/img/10€.png" alt="10€"></button>
+                    <button class="btn-money" onclick="insertarMoneda(20.00)" title="20.00 €"><img class="img-bill" src="/img/20€.png" alt="20€"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

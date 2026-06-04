@@ -1,0 +1,8 @@
+{
+  "Bola Transparente": { "stock": 10, "precio": 1.00, "premio": "Pegatina otaku" },
+  "Bola Roja": { "stock": 8, "precio": 1.50, "premio": "Llavero Anime" },
+  "Bola Azul": { "stock": 5, "precio": 1.50, "premio": "Pin Coleccionable" },
+  "Bola Verde": { "stock": 6, "precio": 1.50, "premio": "Amuleto omamori" },
+  "Bola Rosa": { "stock": 3, "precio": 2.00, "premio": "Mini peluche ánime" },
+  "Bola Amarilla": { "stock": 2, "precio": 3.00, "premio": "Tamagotchi" }
+}

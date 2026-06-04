@@ -1,0 +1,286 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Contenedor principal de la máquina */
+.vending-machine {
+    background-color: #2b3a42;
+    border-radius: 20px;
+    padding: 30px;
+    width: 750px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    color: white;
+    border: 4px solid #ff5376;
+}
+
+.title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    color: #ff5376;
+    text-shadow: 2px 2px 0px #000;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 25px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #3fecff;
+}
+
+
+/* =======================================================
+   BOTONES DE SELECCIÓN DE BOLA
+   ======================================================= */
+
+/* Bolas en 2 columnas */
+.btn-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    justify-items: center;
+}
+
+
+.btn-ball {
+    background: transparent !important; 
+    border: none !important;             
+    outline: none !important;           
+    padding: 0 !important;
+    margin: 0 !important;
+    cursor: pointer;
+    position: relative;
+    width: 110px;  
+    height: 110px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease;
+    box-shadow: none !important;        
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-ball:hover:not(:disabled) {
+    transform: scale(1.1); 
+}
+
+/* Agotado, color gris, sin poder seleccionar */
+.btn-ball:disabled {
+    cursor: not-allowed;
+    filter: grayscale(1) opacity(0.4); 
+    background: transparent !important;
+}
+
+/* Imagen de la bola perfectamente centrada */
+.img-ball-choice {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    border: none !important;
+}
+
+/* Textos informativos de la bola */
+.ball-overlay {
+    position: absolute;
+    z-index: 2;
+    background: transparent !important; 
+    border: none !important;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; 
+}
+
+/* Textos informativos de la bola */
+.bola-info {
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 1), -1px -1px 3px rgba(0, 0, 0, 1); 
+}
+
+/* Etiquetas de stock */
+.stock-label {
+    font-size: 11px;
+    color: #3fecff;
+    font-weight: bold;
+    display: block;
+    margin-top: 2px;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
+}
+
+.btn-ball:disabled .stock-label {
+    color: #ff5376;
+}
+
+/* Botón flotante del precio */
+.ball-price {
+    font-weight: bold;
+    background-color: #ff5376;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    margin-top: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6); 
+    border: none !important;
+}
+
+/* BOTONERA DE BOLAS */
+.contenedor__bolas-acciones {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.contenedor__bolas-acciones-btn {
+    flex: 1;
+    background-color: #1b263b;
+    color: #3fecff;
+    border: 2px solid #415a77;
+    padding: 10px 5px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
+}
+
+.contenedor__bolas-acciones-btn:hover {
+    background-color: #3fecff;
+    color: #0d1b2a;
+    border-color: #3fecff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(63, 236, 255, 0.2);
+}
+
+/* Pantallas/Displays retroiluminados */
+.display-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.display {
+    background-color: #0d1b2a;
+    border: 2px solid #1b263b;
+    border-radius: 6px;
+    padding: 12px;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+#precio-display { color: #e6b800; font-size: 16px; }
+#saldo-display { color: #00ff00; font-size: 20px; }
+#seleccion-display { 
+    color: #00ffff; 
+    font-size: 14px; 
+    line-height: 1.4; 
+    text-align: left; 
+    padding-left: 20px;
+    min-height: 60px;
+}
+
+/* Botón de Girar Manivela */
+.btn-crank {
+    background: linear-gradient(135deg, #ff9f43, #ff5376);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: all 0.2s;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-crank:hover:not(:disabled) {
+    filter: brightness(1.1);
+    box-shadow: 0 8px 15px rgba(255, 83, 118, 0.4);
+}
+
+.btn-crank:disabled {
+    background: #555;
+    color: #888;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Botón Cancelar */
+.btn-reset {
+    background-color: #F2979E;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.btn-reset:hover {
+    background-color: #680D15;
+    box-shadow: 0 4px 8px rgba(255, 83, 118, 0.3);
+}
+
+/* Cuadrícula de monedas y billetes */
+.money-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 10px;
+    justify-items: center;
+}
+
+.btn-money {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s;
+}
+
+.btn-money:hover { transform: scale(1.1); }
+.img-coin { width: 55px; height: 55px; object-fit: contain; }
+.img-bill { width: 80px; height: 45px; object-fit: contain; border-radius: 2px; }
+
+/* Desglose de cambios */
+.lista-devolucion { list-style-type: none; margin: 5px 0 0 0; padding: 0; }
+.lista-devolucion li { margin-bottom: 2px; font-size: 12px; }
